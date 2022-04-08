@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+
+			<div class="card">
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<p:panelGrid columns="1" styleClass="ui-panelgrid-blank"
+							layout="grid">
+
+							<h1>#{msg.editPermiso}</h1>
+							<p:outputLabel value="#{msg.nombre}:" for="nombre" />
+							<p:inputText id="nombre" value="#{permisoMB.nombre}"
+								label="#{msg.nombre}" required="true">
+								<p:ajax update="@this nombreError" />
+							</p:inputText>
+							<p:message id="nombreError" for="nombre" />
+							<p:outputLabel value="#{msg.descripcion}:" for="descripcion" />
+							<p:inputTextarea id="descripcion"
+								value="#{permisoMB.descripcion}"
+								label="#{msg.descripcion}" required="true">
+								<p:ajax update="@this descripcionError" />
+							</p:inputTextarea>
+							<p:message id="descripcionError" for="descripcion" />
+						</p:panelGrid>
+					</div>
+				</div>
+				<div class="p-formgroup-inline">
+					<div class="p-field">
+						<p:commandButton id="save" value="#{msg.save}"
+							icon="fa fa-floppy-o"
+							action="#{permisoMB.guardarEdicion()}" ajax="true"
+							update="@form" />
+					</div>
+					<div class="p-field">
+						<p:commandButton id="cancel" icon="fa fa-ban"
+							value="#{msg.cancel}" action="permisoConf"
+							actionListener="#{permisoMB.limpiar()}" immediate="true"
+							ajax="true" update="@form" />
+					</div>
+				</div>
+			</div>
+			<h:inputHidden value="#{permisoMB.id}" />
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,172 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+
+			<div class="card">
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<h1>#{msg.editUsuario}</h1>
+						<div class="ui-fluid p-formgrid p-grid">
+							<div class="p-field p-col-12 p-md-3">
+								<p:outputLabel
+									value="#{msg.apellido} #{msg.nombre}:" for="apellido" />
+								<p:inputText id="apellido"
+									value="#{usuarioMB.apellidoNombre}"
+									label="#{msg.apellido} #{msg.nombre}" required="true">
+									<p:ajax update="@this apellidoError" event="valueChange" />
+								</p:inputText>
+								<p:message id="apellidoError" for="apellido" />
+							</div>
+
+							<div class="p-field p-col-12 p-md-3">
+									<p:outputLabel value="#{msg.cuitCuil}:" for="dni" />
+									<p:inputText id="dni" value="#{usuarioMB.documento}"
+										label="#{msg.cuitCuil}" type="number" required="true">
+										<p:ajax update="@this dniError" event="valueChange" />
+									</p:inputText>
+									<p:message id="dniError" for="dni" />
+								</div>
+
+							<div class="p-field p-col-12 p-md-3">
+								<p:outputLabel for="fechaNacimiento"
+									value="#{msg.fechaNacimiento}:" />
+								<p:calendar id="fechaNacimiento"
+									value="#{usuarioMB.fechaNacimiento}" locale="es"
+									required="true" navigator="true" pattern="dd/MM/yyyy" />
+								<p:message id="fechaNacimientoError"
+									for="fechaNacimiento" />
+							</div>
+
+							<div class="p-field p-col-12 p-md-3">
+								<p:outputLabel value="#{msg.domicilio}:"
+									for="domicilio" />
+								<p:inputText id="domicilio"
+									value="#{usuarioMB.domicilio}" label="#{msg.domicilio}"
+									required="true">
+									<p:ajax update="@this domicilioError"
+										event="valueChange" />
+								</p:inputText>
+								<p:message id="domicilioError" for="domicilio" />
+							</div>
+
+							<div class="p-field p-col-12 p-md-3">
+								<p:outputLabel value="#{msg.municipio}:"
+									for="municipio" />
+								<p:selectOneMenu id="municipio"
+									value="#{usuarioMB.idMunicipio}" label="#{msg.municipio}"
+									required="true" filter="true">
+									<f:selectItem noSelectionOption="true"
+										itemValue="0" itemLabel="#{msg.ninguno}" />
+									<f:selectItems
+										value="#{usuarioMB.selectItemsMunicipio}" />
+									<p:ajax update="@this municipioError" />
+								</p:selectOneMenu>
+								<p:message id="municipioError" for="municipio" />
+							</div>
+
+
+							<div class="p-field p-col-12 p-md-3">
+								<p:outputLabel value="#{msg.nacionalidad}:"
+									for="nacionalidad" />
+								<p:inputText id="nacionalidad"
+									value="#{usuarioMB.nacionalidad}" label="#{msg.nacionalidad}"
+									required="true">
+									<p:ajax update="@this nacionalidadError"
+										event="valueChange" />
+								</p:inputText>
+								<p:message id="nacionalidadError" for="nacionalidad" />
+							</div>
+							<div class="p-field p-col-12 p-md-3">
+								<p:outputLabel value="#{msg.telefono}:"
+									for="telefono" />
+								<p:inputText id="telefono"
+									value="#{usuarioMB.telefono}" label="#{msg.telefono}"
+									required="true">
+									<p:ajax update="@this telefonoError" event="valueChange" />
+								</p:inputText>
+								<p:message id="telefonoError" for="telefono" />
+							</div>
+
+							<div class="p-field p-col-12 p-md-3">
+								<p:outputLabel value="#{msg.correo}:" for="correo" />
+								<p:inputText id="correo" value="#{usuarioMB.correo}"
+									type="email" label="#{msg.correo}" required="true">
+									<p:ajax update="@this correoError" event="valueChange" />
+								</p:inputText>
+								<p:message id="correoError" for="correo" />
+							</div>
+
+							<div class="p-field p-col-12 p-md-3">
+								<p:outputLabel value="#{msg.usuario}:"
+									for="nombreUsuario" />
+								<p:inputText id="nombreUsuario"
+									value="#{usuarioMB.nombreUsuario}" label="#{msg.usuario}"
+									required="true">
+									<p:ajax update="@this nombreUsuarioError"
+										event="valueChange" />
+								</p:inputText>
+								<p:message id="nombreUsuarioError" for="nombreUsuario" />
+							</div>
+
+							<div class="p-field p-col-12 p-md-3">
+								<p:outputLabel value="#{msg.contrasenia}:"
+									for="contrasenia" />
+								<p:inputText id="contrasenia"
+									value="#{usuarioMB.claveAcceso}" label="#{msg.contrasenia}"
+									required="true">
+									<p:ajax update="@this contraseniaError"
+										event="valueChange" />
+								</p:inputText>
+								<p:message id="contraseniaError" for="contrasenia" />
+							</div>
+
+							<div class="p-field p-col-12 p-md-3">
+								<p:outputLabel value="#{msg.rol}:" for="roles" />
+								<p:selectOneMenu id="roles"
+									value="#{usuarioMB.idRol}" label="#{msg.rol}" required="true"
+									filter="true">
+									<f:selectItem noSelectionOption="true"
+										itemValue="0" itemLabel="#{msg.ninguno}" />
+									<f:selectItems
+										value="#{usuarioMB.selectItemsRol}" />
+									<p:ajax update="@this rolError" />
+								</p:selectOneMenu>
+								<p:message id="rolError" for="roles" />
+
+							</div>
+
+							<div class="p-field p-col-12 p-md-3">
+								<p:outputLabel value="#{msg.foto}:" for="foto" />
+								<p:fileUpload id="foto"
+									listener="#{usuarioMB.subirArchivo}" mode="advanced"
+									update="fotoMsg" auto="true"
+									allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+								<p:messages id="fotoMsg" for="foto" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="p-formgroup-inline">
+				<div class="p-field">
+					<p:commandButton id="save" value="#{msg.save}"
+						icon="fa fa-floppy-o" action="#{usuarioMB.guardarEdicion()}"
+						ajax="true" update="@form" />
+				</div>
+				<div class="p-field">
+					<p:commandButton id="cancel" icon="fa fa-ban"
+						value="#{msg.cancel}" action="usuarioConf"
+						actionListener="#{usuarioMB.limpiar()}" immediate="true"
+						ajax="true" update="@form" />
+				</div>
+			</div>
+		</h:form>
+		<h:inputHidden value="#{usuarioMB.id}" />
+	</ui:define>
+
+</ui:composition>

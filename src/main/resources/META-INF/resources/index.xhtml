@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <link href="css/configs.css" rel="stylesheet" type="text/css"/>
+            <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/images/favicon.ico"/>
+        </f:facet>
+        <title>#{msg.sys}</title>
+    </h:head>
+
+    <h:body >
+        <h:form styleClass="login-body" >
+            <div class="login-panel ui-fluid">
+                <div class="p-grid">
+                    <div class="p-col-12 logo-container">
+                        <p:graphicImage name="images/tableroLogo.png" library="verona-layout" style="width: 250px;" />
+                        <h1>#{msg.sys}</h1>
+                    </div>
+                    <div class="p-col-12">
+                        <p:inputText id="usuario"
+                                     value="#{webMB.nombreUsuario}"                               
+                                     placeholder="#{msg.usuario}"
+                                     required="true" />
+                    </div>
+                    <div class="p-col-12">
+                        <p:password id="pass"
+                                    value="#{webMB.claveAcceso}"
+                                    placeholder="#{msg.contrasenia}"
+                                    required="true" />
+                    </div>
+                    <!--<div class="p-col-12 chkbox-container">
+                        <p:selectBooleanCheckbox id="remember-me" />
+                        <p:outputLabel for="remember-me" value="Remember Me"/>
+                    </div>-->
+                    <p:growl id="growl" showDetail="true"  />
+                    <div class="p-col-12 button-container">
+                        <p:commandButton id="login" update="@form" ajax="true" action="#{webMB.login}" value="#{msg.iniciarSesion}" icon="fa fa-user" styleClass="ui-button-success rounded-button ui-button-raised" />
+                    </div>
+                    <div class="p-col-12">
+                        <p:commandLink value="Recuperar mi clave" immediate="true" update="@form" ajax="true" action="recuperarClave" />
+                    </div>
+                    <div class="p-col-12">
+                         <span>#{msg.author} - #{msg.footer}</span>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+        <h:outputStylesheet name="css/layout-blue.css" library="verona-layout" />
+    </h:body>
+
+</html>

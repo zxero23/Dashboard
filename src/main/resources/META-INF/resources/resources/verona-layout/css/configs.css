@@ -1,0 +1,29 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 17/09/2021, 09:25:02
+    Author     : Matias
+*/
+
+.resultado .fa .fa-check{
+    color: green;
+    font-size: 1.5em;
+    margin-right: 10px;
+}
+
+body .ui-panel {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+body .ui-panel .ui-panel-titlebar {
+	border-bottom: 1px solid #dee2e6 !important;
+}
+
+body .ui-datatable thead th {
+text-align: center!important;	
+	
+}

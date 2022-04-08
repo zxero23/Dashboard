@@ -1,0 +1,135 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	
+	<ui:define name="title">#{msg.confUsuario}</ui:define>
+
+	<ui:define name="content">
+		<div class="card">
+			<h1 class="lightBlack">#{msg.confUsuario}</h1>
+
+			<h:form id="formUsuario" title=" ">
+				<p:defaultCommand target="buscar" />
+				<div class="p-formgroup-inline">
+					<div class="p-field">
+						<p:commandButton action="usuarioConf" icon="fa fa-refresh"
+							actionListener="#{usuarioMB.actualizar}"
+							value="#{msg.actualizar}" ajax="true" update="@form" />
+					</div>
+					<div class="p-field">
+						<p:commandButton action="nuevoUsuario" icon="fa fa-plus"
+							value="#{msg.newUsuario}" rendered="#{usuarioMB.alta}"
+							ajax="true" update="@form" />
+					</div>
+				</div>
+				<p:panel id="panelBusquedaUsuario" header="#{msg.busqueda}"
+					toggleable="true" toggleSpeed="200" collapsed="true"
+					class="ui-fluid">
+					<div class="p-field">
+						<p:outputLabel value="#{msg.apellido} #{msg.nombre}:" for="nombre"
+							styleClass="p-col-fixed" />
+						<p:inputText id="nombre" value="#{usuarioMB.apellidoNombreBsq}" />
+					</div>
+					<div class="p-field">
+						<p:outputLabel value="#{msg.rol}:" for="rol"
+							styleClass="p-col-fixed" />
+						<p:selectOneMenu id="rol" value="#{usuarioMB.idRolBsq}"
+							label="#{msg.rol}" filter="true">
+							<f:selectItem noSelectionOption="true" itemValue="0"
+								itemLabel="#{msg.ninguno}" />
+							<f:selectItems value="#{usuarioMB.selectItemsRol}" />
+							<p:ajax update="@this" />
+						</p:selectOneMenu>
+					</div>
+					<div class="p-formgroup-inline">
+						<div class="p-field">
+							<p:commandButton id="buscar" value="#{msg.find}"
+								icon="fa fa-search"
+								actionListener="#{usuarioMB.aplicarFiltro}" ajax="true"
+								update="@form" />
+						</div>
+						<div class="p-field">
+							<p:commandButton value="#{msg.actualizar}" icon="fa fa-refresh"
+								actionListener="#{usuarioMB.actualizar}" ajax="true"
+								update="@form" />
+						</div>
+
+					</div>
+				</p:panel>
+
+				<p:dataTable id="usuarioDataTable"
+					value="#{usuarioMB.listElements}" reflow="true" var="item"
+					first="#{usuarioMB.page}" paginator="true"
+					paginatorPosition="bottom" rows="10" lazy="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="#{msg.currentPageReportTemplate}">
+
+					<p:column id="id" headerText="#{msg.id}">
+						<h:outputText id="cellId" value="#{item.id}" />
+					</p:column>
+
+					<p:column id="apellido" headerText="#{msg.apellido} #{msg.nombre}">
+						<h:outputText id="cellApellido" value="#{item.persona.apellidoNombreRazonSocial}" />
+					</p:column>
+
+					<p:column id="usuario" headerText="#{msg.usuario}">
+						<h:outputText id="cellUsuario" value="#{item.nombreUsuario}" />
+					</p:column>
+
+					<p:column id="rol" headerText="#{msg.rol}">
+						<h:outputText id="cellRol"
+							value="#{item.rol!=null?item.rol.nombre : 'NO DEFINIDO'}" />
+					</p:column>
+
+					<p:column id="permisos" headerText="Permisos">
+						<div class="p-formgroup-inline">
+							<div class="p-field">
+								<p:commandButton id="detalle" p:title="Detalle"
+									onclick="detalleUsuario([{name:'id', value:'#{item.id}'}]);"
+									icon="fa fa-search-plus"
+									rendered="#{usuarioMB.detalle}">
+								</p:commandButton>
+							</div>
+							<div class="p-field">
+								<p:commandButton id="editar" p:title="Editar" icon="fa fa-edit"
+									onclick="editarUsuario([{name:'id', value:'#{item.id}'}]);"
+									rendered="#{usuarioMB.modificacion}" />
+							</div>
+							<div class="p-field">
+								<p:commandButton id="eliminar" p:title="Eliminar"
+									onclick="eliminarUsuario([{name:'id', value:'#{item.id}'}]);"
+									rendered="#{usuarioMB.baja}" icon="fa fa-trash">
+									<p:confirm header="#{msg.confirm}" message="#{msg.msgDelete}"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade" closable="false">
+									<p:commandButton id="_yes" value="#{msg.acep}" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton id="_no" value="#{msg.cancel}" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+										ajax="true" update="@form" />
+								</p:confirmDialog>
+							</div>
+						</div>
+					</p:column>
+				</p:dataTable>
+				<p:remoteCommand name="detalleUsuario"
+					actionListener="#{usuarioMB.verDetalle()}"
+					action="detalleUsuario" process="@this" update="@form" />
+				<p:remoteCommand name="editarUsuario"
+					actionListener="#{usuarioMB.prepararParaEditar()}"
+					action="editarUsuario" process="@this" update="@form" />
+				<p:remoteCommand name="eliminarUsuario"
+					actionListener="#{usuarioMB.guardarBorrado()}"
+					action="usarioConf" process="@this" update="@form" />
+			</h:form>
+		</div>
+
+
+	</ui:define>
+
+</ui:composition>

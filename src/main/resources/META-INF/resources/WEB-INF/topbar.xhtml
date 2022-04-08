@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pa="http://primefaces.org/verona">
+
+	<div class="topbar">
+		<div class="topbar-main">
+			<a href="#" id="menu-button">
+				<span class="pi pi-bars"></span>
+			</a>
+			<h:commandLink action="administracion">
+				<p:graphicImage name="images/logo-blanco.svg"
+					library="verona-layout" styleClass="logo" style="width: 240px;" />
+			</h:commandLink>
+			<!--<div class="app-name"> <h:commandLink action="administracion" value="VERONA"/> 
+				</div> -->
+
+			<a href="#" id="user-display">
+				<span class="username">#{webMB.usuario.persona.apellidoNombreRazonSocial}
+				</span>
+				<span class="userrole">#{webMB.rol}</span>
+				<p:graphicImage name="images/avatar.png"
+					library="verona-layout" />
+			</a>
+			<h:form id="formTop">
+				<ul id="topbar-menu" class="fadeInDown animated">
+					<li role="menuitem">
+						<p:commandLink action="index" ajax="true"
+							actionListener="#{webMB.logout()}" style="background: none;">
+							<i class="pi pi-fw pi-user"></i>
+							<span>MI PERFIL</span>
+						</p:commandLink>
+					</li>
+					<li role="menuitem">
+						<p:commandLink action="cambiarClave" ajax="true"
+							actionListener="#{usuarioMB.prepararParaCambiarClave()}" style="background: none;">
+							<i class="pi pi-fw pi-cog"></i>
+							<span>CABIAR CLAVE</span>
+						</p:commandLink>
+					</li>
+					<li role="menuitem">
+						<p:commandLink action="index" ajax="true"
+							actionListener="#{webMB.logout()}" style="background: none;">
+							<i class="pi pi-fw pi-sign-out"></i>
+							<span>SALIR</span>
+						</p:commandLink>
+					</li>
+				</ul>
+			</h:form>
+		</div>
+
+		<ui:include src="./menu.xhtml" />
+	</div>
+
+</ui:composition>

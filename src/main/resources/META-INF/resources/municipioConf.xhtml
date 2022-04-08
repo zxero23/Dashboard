@@ -1,0 +1,134 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+    <ui:define name="title">#{msg.confMunicipio}</ui:define>
+	<ui:define name="content">
+		<div class="card">
+			<h1 class="lightBlack">#{msg.confMunicipio}</h1>
+
+			<h:form id="formMunicipio" title=" ">
+				<div class="p-formgroup-inline">
+					<div class="p-field">
+						<p:commandButton action="municipioConf" icon="fa fa-refresh"
+							actionListener="#{municipioMB.actualizar}"
+							value="#{msg.actualizar}" ajax="true" update="@form" />
+					</div>
+					<div class="p-field">
+						<p:commandButton action="nuevoMunicipio" icon="fa fa-plus"
+							value="#{msg.newMunicipio}" rendered="#{municipioMB.alta}"
+							ajax="true" update="@form" />
+					</div>
+				</div>
+				<p:panel id="panelBusquedaMunicipio" header="#{msg.busqueda}"
+					toggleable="true" toggleSpeed="200" collapsed="true"
+					class="ui-fluid">
+					<p:hotkey bind="enter"
+						actionListener="#{municipioMB.aplicarFiltro}" />
+					<div class="p-field">
+						<p:outputLabel value="#{msg.nombre}:" for="nombre"
+							styleClass="p-col-fixed" />
+						<p:inputText id="nombre" value="#{municipioMB.nombreBsq}" />
+					</div>
+					<div class="p-field">
+						<p:outputLabel value="#{msg.codigoPostal}:" for="codigoPostal"
+							styleClass="p-col-fixed" />
+						<p:inputText id="codigoPostal"
+							value="#{municipioMB.codigoPostalBsq}" />
+					</div>
+					<div class="p-field">
+						<p:outputLabel value="#{msg.departamento}:" for="departamento"
+							styleClass="p-col-fixed" />
+						<p:selectOneMenu id="departamento"
+							value="#{municipioMB.idDeptoBsq}" label="#{msg.departamento}"
+							filter="true">
+							<f:selectItem noSelectionOption="true" itemValue="0"
+								itemLabel="#{msg.ninguno}" />
+							<f:selectItems value="#{municipioMB.selectItems}" />
+							<p:ajax update="@this" />
+						</p:selectOneMenu>
+					</div>
+					<div class="p-formgroup-inline">
+						<div class="p-field">
+							<p:commandButton value="#{msg.find}" icon="fa fa-search"
+								actionListener="#{municipioMB.aplicarFiltro}" ajax="true"
+								update="@form" />
+						</div>
+						<div class="p-field">
+							<p:commandButton value="#{msg.actualizar}" icon="fa fa-refresh"
+								actionListener="#{municipioMB.actualizar}" ajax="true"
+								update="@form" />
+						</div>
+					</div>
+				</p:panel>
+
+				<p:dataTable id="municipioDataTable"
+					value="#{municipioMB.listElements}" var="item" lazy="true"
+					reflow="true" paginator="true" paginatorPosition="bottom" rows="10"
+					class="panel-buttons" first="#{municipioMB.page}"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="#{msg.currentPageReportTemplate}">
+
+					<p:column id="nombre" headerText="#{msg.nombre}">
+						<h:outputText id="cellNombre" value="#{item.nombre}" />
+					</p:column>
+
+					<p:column id="codigoPostal" headerText="#{msg.codigoPostal}">
+						<h:outputText id="cellCodigoPostal" value="#{item.codigoPostal}" />
+					</p:column>
+
+					<p:column id="departamento" headerText="#{msg.departamento}">
+						<h:outputText id="cellDepartamento"
+							value="#{item.departamento.nombre}" />
+					</p:column>
+
+					<p:column id="permisos" headerText="Permisos">
+						<div class="p-formgroup-inline">
+							<div class="p-field">
+								<p:commandButton id="detalle" p:title="Detalle"
+									onclick="detalleMunicipio([{name:'id', value:'#{item.id}'}]);"
+									icon="fa fa-search-plus" rendered="#{municipioMB.detalle}">
+								</p:commandButton>
+							</div>
+							<div class="p-field">
+								<p:commandButton id="editar" p:title="Editar" icon="fa fa-edit"
+									onclick="editarMunicipio([{name:'id', value:'#{item.id}'}]);"
+									rendered="#{municipioMB.modificacion}" />
+							</div>
+							<div class="p-field">
+								<p:commandButton id="eliminar" p:title="Eliminar"
+									onclick="eliminarMunicipio([{name:'id', value:'#{item.id}'}]);"
+									rendered="#{municipioMB.baja}" icon="fa fa-trash">
+									<p:confirm header="#{msg.confirm}" message="#{msg.msgDelete}"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+							</div>
+						</div>
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+							closable="false">
+							<p:commandButton id="_yes" value="#{msg.acep}" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton id="_no" value="#{msg.cancel}" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+								ajax="true" update="@form" />
+						</p:confirmDialog>
+					</p:column>
+				</p:dataTable>
+				<p:remoteCommand name="detalleMunicipio"
+					actionListener="#{municipioMB.verDetalle()}"
+					action="detalleMunicipio" process="@this" update="@form" />
+				<p:remoteCommand name="editarMunicipio"
+					actionListener="#{municipioMB.prepararParaEditar()}"
+					action="editarMunicipio" process="@this" update="@form" />
+				<p:remoteCommand name="eliminarMunicipio"
+					actionListener="#{municipioMB.guardarBorrado()}"
+					action="municipioConf" process="@this" update="@form" />
+
+			</h:form>
+		</div>
+
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+
+			<div class="card">
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<p:panelGrid columns="1" styleClass="ui-panelgrid-blank"
+							layout="grid">
+
+							<h1>#{msg.newMenu}</h1>
+							<p:outputLabel value="#{msg.nameMenuPadre}:" for="menuPadre"
+								styleClass="p-col-fixed" />
+							<p:selectOneMenu id="menuPadre"
+								value="#{menuMB.idMenuPadre}"
+								label="#{msg.nameMenuPadre}" filter="true" required="true">
+								<f:selectItem itemValue="0" itemLabel="#{msg.ninguno}" />
+								<f:selectItems value="#{menuMB.selectItems}" />
+								<p:ajax update="@this menuPadreError" />
+							</p:selectOneMenu>
+							<p:message id="menuPadreError" for="menuPadre" />
+							<p:outputLabel value="#{msg.nombre}:" for="nombre" />
+							<p:inputText id="nombre" value="#{menuMB.nombre}"
+								label="#{msg.nombre}" required="true">
+								<p:ajax update="@this nombreError" />
+							</p:inputText>
+							<p:message id="nombreError" for="nombre" />
+							<p:outputLabel value="#{msg.link}:" for="link" />
+							<p:inputText id="link" value="#{menuMB.link}"
+								label="#{msg.link}">
+								<p:ajax update="@this linkError" />
+							</p:inputText>
+							<p:message id="linkError" for="link" />
+							<p:outputLabel value="#{msg.icono}:" for="icono" />
+							<p:inputText id="icono" value="#{menuMB.icono}"
+								label="#{msg.icono}">
+								<p:ajax update="@this iconoError" />
+							</p:inputText>
+							<p:message id="iconoError" for="icono" />
+						</p:panelGrid>
+					</div>
+				</div>
+				<div class="p-formgroup-inline">
+					<div class="p-field">
+						<p:commandButton id="save" value="#{msg.save}"
+							icon="fa fa-floppy-o" action="#{menuMB.crear()}"
+							ajax="true" update="@form" />
+					</div>
+					<div class="p-field">
+						<p:commandButton id="saveAndAdd" icon="fa fa-floppy-o"
+							value="#{msg.saveCreate}" action="#{menuMB.crearOtro()}"
+							ajax="true" update="@form" />
+					</div>
+					<div class="p-field">
+						<p:commandButton id="cancel" icon="fa fa-ban"
+							value="#{msg.cancel}" action="menuConf"
+							actionListener="#{menuMB.limpiar()}" immediate="true"
+							ajax="true" update="@form" />
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
