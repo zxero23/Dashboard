@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+
+            <div class="card">
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12">
+                        <h1>#{msg.detailsDepartamento}</h1>
+                        <p:panelGrid columns="2"  layout="tabular">
+                           
+                            <h:outputLabel value="#{msg.id}:" />
+                            <h:outputText value="#{departamentoMB.id}"/>
+                            <h:outputLabel value="#{msg.nombre}:" />
+                            <h:outputText value="#{departamentoMB.nombre}"/>
+                            <h:outputLabel value="#{msg.distrito}:" />
+                            <h:outputText value="#{departamentoMB.distrito}"/>
+                        </p:panelGrid>
+                    </div>
+                </div>
+                <p:commandButton id="volver" icon="fa fa-chevron-left" value="#{msg.volver}" action="departamentoConf" actionListener="#{departamentoMB.limpiar()}" immediate="true" ajax="true" update="@form" />
+            </div>
+        </h:form>
+        <h:inputHidden value="#{departamentoMB.id}"/>
+    </ui:define>
+
+</ui:composition>

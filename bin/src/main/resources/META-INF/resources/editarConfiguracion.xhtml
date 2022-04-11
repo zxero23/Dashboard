@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+
+			<div class="card">
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<p:panelGrid columns="1" styleClass="ui-panelgrid-blank"
+							layout="grid">
+
+							<h1>#{msg.editConfiguracion}</h1>
+							<p:outputLabel value="#{msg.llave}:" for="llave" />
+							<p:inputText id="llave" value="#{configuracionMB.llave}"
+								label="#{msg.llave}" required="true">
+								<p:ajax update="@this llaveError" />
+							</p:inputText>
+							<p:message id="llaveError" for="llave" />
+
+							<p:outputLabel value="#{msg.valor}:" for="valor" />
+							<p:inputText id="valor" value="#{configuracionMB.valor}"
+								label="#{msg.valor}" required="true">
+								<p:ajax update="@this valorError" />
+							</p:inputText>
+							<p:message id="valorError" for="valor" />
+						</p:panelGrid>
+					</div>
+				</div>
+				<div class="p-formgroup-inline">
+					<div class="p-field">
+						<p:commandButton id="save" value="#{msg.save}"
+							icon="fa fa-floppy-o"
+							action="#{configuracionMB.guardarEdicion()}" ajax="true"
+							update="@form" />
+					</div>
+					<div class="p-field">
+						<p:commandButton id="cancel" icon="fa fa-ban"
+							value="#{msg.cancel}" action="configuracionConf"
+							actionListener="#{configuracionMB.limpiar()}"
+							immediate="true" ajax="true" update="@form" />
+					</div>
+				</div>
+			</div>
+		</h:form>
+		<h:inputHidden value="#{configuracionMB.id}" />
+	</ui:define>
+
+</ui:composition>

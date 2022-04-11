@@ -235,11 +235,6 @@ public class MunicipioMB extends UtilMB implements Serializable {
 				return result;
 			}
 
-			@Override
-			public int count(Map<String, FilterMeta> filterBy) {
-				// TODO Auto-generated method stub
-				return 0;
-			}
 
 		};
 		userDataList.setRowCount(municipioService.count(MunicipioSpecs.getMunicipioByDepartamento(getIdDeptoBsq())

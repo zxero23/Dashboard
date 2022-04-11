@@ -1,0 +1,66 @@
+server:
+ port : 8080
+ compression:
+   enabled: true
+   min-response-size: 1024
+   mime-types: text/html,text/css,application/javascript,application/json
+ servlet:
+   session:
+     timeout: 30m
+tomcat:
+ threads:
+  max:200
+secretKey: "fd7b781158e9408ce61a3eae735d052039bfaf0f"
+joinfaces:
+  jsf:
+    PROJECT_STAGE: Production
+  primefaces: 
+    theme: verona-blue
+    FONT_AWESOME: true
+  butterfaces:
+   provideJQuery: true
+   useCompressedResources: true
+  omnifaces:
+   filter:
+    GzipResponseFilter: gzipResponseFilter
+#LOGS
+logging:
+  file-path: /home/ArchivosTransporte/logs
+  file: transporte.log
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    org.springframework.boot.SpringApplication: WARN
+    org.springframework.web: WARN
+    org.ipa.api.controllers: INFO
+    org.ipa.api.security: INFO
+    org.ipa.api.services: INFO
+    org.springframework.data: WARN
+    org.hibernate: INFO
+    springfox: WARN 
+    #configuracion de la zona horaria (no modificar)    
+spring:
+  jackson:
+    time-zone: America/Buenos_Aires  
+#configuracion de JPA (definido por desarrolladores)   
+  jpa:
+    hibernate:
+      ddl-auto: update    
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+#configuracion de la BD (definido por infra)
+  datasource:   
+    url: jdbc:postgresql://localhost:5432/tableroDB
+    username: postgres
+    password: admin
+#Config de los mails
+mails:
+#definido por infra
+ host: smtp.gmail.com
+ port: 587
+#definido por dev 
+ emisor: Centro de Cómputos Misiones
+ email: ccpmisiones@gmail.com
+ password: ccpmisiones2021

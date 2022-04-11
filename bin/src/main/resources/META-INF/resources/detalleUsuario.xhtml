@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
+	            xmlns:of="http://omnifaces.org/functions"
+                template="/WEB-INF/template.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="content">
+        <h:form>
+            <style>
+            .ui-panelgrid tr:nth-child(odd) {
+    background-color: #f2f2f2 !important;
+}
+            </style>
+            <div class="card">
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12">
+                        <h1>#{msg.detailsUsuario}</h1>
+                        <p:panelGrid columns="2"  layout="tabular" class="detalle" >
+
+                            <h:outputLabel value="#{msg.id}:" />
+                            <h:outputText value="#{usuarioMB.usuarioAux.id}"/>
+                            <h:outputLabel value="#{msg.apellido} #{msg.nombre}:" />
+                            <h:outputText value="#{usuarioMB.usuarioAux.persona.apellidoNombreRazonSocial}"/>
+                            <h:outputLabel value="#{msg.cuitCuil}:" />
+                            <h:outputText value="#{usuarioMB.usuarioAux.persona.documento}"/>
+                            <h:outputLabel value="#{msg.telefono}:" />
+                            <h:outputText value="#{usuarioMB.usuarioAux.persona.telefono}"/>
+                            <h:outputLabel value="#{msg.correo}:" />
+                            <h:outputText value="#{usuarioMB.usuarioAux.persona.correo}"/>
+                             <h:outputLabel value="#{msg.domicilio}:" />
+                            <h:outputText value="#{usuarioMB.usuarioAux.persona.domicilio}"/>
+                            <h:outputLabel value="#{msg.municipio}:" />
+                            <h:outputText value="#{usuarioMB.usuarioAux.persona.municipio.nombre}"/>
+                            <h:outputLabel value="#{msg.nacionalidad}:" />
+                            <h:outputText value="#{usuarioMB.usuarioAux.persona.nacionalidad}"/>
+                            <h:outputLabel value="#{msg.fechaNacimiento}:" />
+                            <h:outputText value="#{of:formatDate(usuarioMB.usuarioAux.persona.fechaNacimiento, 'dd/MM/yyyy')}"/>
+                            <h:outputLabel value="#{msg.contrasenia}:" />
+                            <h:outputText value="#{usuarioMB.usuarioAux.claveAcceso}"/>
+                            <h:outputLabel value="#{msg.rol}:" />
+                            <h:outputText value="#{usuarioMB.usuarioAux.rol.nombre}"/>
+                        </p:panelGrid>
+                    </div>
+                </div>
+                <p:commandButton id="volver" icon="fa fa-chevron-left" value="#{msg.volver}" action="usuarioConf" actionListener="#{usuarioMB.limpiar()}" immediate="true" ajax="true" update="@form" />
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
