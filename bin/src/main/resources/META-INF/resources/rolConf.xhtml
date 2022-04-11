@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	
+	<ui:define name="title">#{msg.confRol}</ui:define>
+
+	<ui:define name="content">
+		<div class="card">
+			<h1 class="lightBlack">#{msg.confRol}</h1>
+
+			<h:form id="formRol" title=" ">
+				<p:defaultCommand target="buscar" />
+				<div class="p-formgroup-inline">
+					<div class="p-field">
+						<p:commandButton action="rolConf" icon="fa fa-refresh"
+							actionListener="#{rolMB.actualizar}"
+							value="#{msg.actualizar}" ajax="true" update="@form" />
+					</div>
+					<div class="p-field">
+						<p:commandButton action="nuevoRol" icon="fa fa-plus"
+							actionListener="#{rolMB.limpiar()}"
+							value="#{msg.newRol}" rendered="#{rolMB.alta}"
+							ajax="true" update="@form" />
+					</div>
+				</div>
+				<p:panel id="panelBusquedaRol" header="#{msg.busqueda}"
+					toggleable="true" toggleSpeed="200" collapsed="true"
+					class="ui-fluid">
+					<div class="p-field">
+						<p:outputLabel value="#{msg.nombre}:" for="rol"
+							styleClass="p-col-fixed" />
+						<p:inputText id="rol" value="#{rolMB.nombreBuscar}" />
+					</div>
+					<div class="p-formgroup-inline">
+						<div class="p-field">
+							<p:commandButton id="buscar" value="#{msg.find}"
+								icon="fa fa-search"
+								actionListener="#{rolMB.aplicarFiltro}" ajax="true"
+								update="@form" />
+						</div>
+						<div class="p-field">
+							<p:commandButton value="#{msg.actualizar}" icon="fa fa-refresh"
+								actionListener="#{rolMB.actualizar}" ajax="true"
+								update="@form" />
+						</div>
+					</div>
+				</p:panel>
+
+				<p:dataTable id="rolDataTable"
+					value="#{rolMB.listElements}" lazy="true" reflow="true"
+					var="item" first="#{rolMB.page}" paginator="true"
+					paginatorPosition="bottom" rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="#{msg.currentPageReportTemplate}">
+
+					<p:column id="id" headerText="#{msg.id}">
+						<h:outputText id="cellId" value="#{item.id}" />
+					</p:column>
+
+					<p:column id="nombre" styleClass="justify-left"
+						headerText="#{msg.nombre}">
+						<h:outputText id="cellNombre" value="#{item.nombre}" />
+					</p:column>
+
+					<p:column id="permisos" headerText="Permisos">
+						<div class="p-formgroup-inline">
+							<div class="p-field">
+								<p:commandButton id="detalle" p:title="Detalle"
+									onclick="detalleRol([{name:'id', value:'#{item.id}'}]);"
+									icon="fa fa-search-plus" rendered="#{rolMB.detalle}">
+								</p:commandButton>
+							</div>
+							<div class="p-field">
+								<p:commandButton id="editar" p:title="Editar" icon="fa fa-edit"
+									onclick="editarRol([{name:'id', value:'#{item.id}'}]);"
+									rendered="#{rolMB.modificacion}" />
+							</div>
+							<div class="p-field">
+								<p:commandButton id="eliminar" p:title="Eliminar"
+									onclick="eliminarRol([{name:'id', value:'#{item.id}'}]);"
+									rendered="#{rolMB.baja}" icon="fa fa-trash">
+									<p:confirm header="#{msg.confirm}" message="#{msg.msgDelete}"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade" closable="false">
+									<p:commandButton id="_yes" value="#{msg.acep}" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton id="_no" value="#{msg.cancel}" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+										ajax="true" update="@form" />
+								</p:confirmDialog>
+							</div>
+						</div>
+					</p:column>
+
+				</p:dataTable>
+				<p:remoteCommand name="detalleRol"
+					actionListener="#{rolMB.verDetalle()}" action="detalleRol"
+					process="@this" update="@form" />
+				<p:remoteCommand name="editarRol"
+					actionListener="#{rolMB.prepararParaEditar()}"
+					action="editarRol" process="@this" update="@form" />
+				<p:remoteCommand name="eliminarRol"
+					actionListener="#{rolMB.guardarBorrado()}"
+					action="rolConf" process="@this" update="@form" />
+			</h:form>
+		</div>
+
+
+	</ui:define>
+
+</ui:composition>
