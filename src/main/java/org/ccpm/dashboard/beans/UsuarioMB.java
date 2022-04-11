@@ -509,11 +509,6 @@ public class UsuarioMB extends UtilMB implements Serializable {
 				return result;
 			}
 
-			@Override
-			public int count(Map<String, FilterMeta> filterBy) {
-				// TODO Auto-generated method stub
-				return 0;
-			}
 
 		};
 		userDataList.setRowCount(usuarioService.count(UsuarioSpecs.getByEstado(true).and(UsuarioSpecs.getUsuarioByApellidoNombre(getApellidoNombreBsq()))

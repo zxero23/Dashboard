@@ -225,12 +225,6 @@ public class MenuMB extends UtilMB implements Serializable {
 				return result;
 			}
 
-			@Override
-			public int count(Map<String, FilterMeta> filterBy) {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
 		};
 		userDataList.setRowCount(menuService
 				.count(MenuSpecs.getMenuByNombre(getNombreBuscar()).and(MenuSpecs.getByEstado(true))).intValue());

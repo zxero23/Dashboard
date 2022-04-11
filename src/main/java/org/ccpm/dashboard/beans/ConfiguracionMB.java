@@ -210,12 +210,6 @@ public class ConfiguracionMB extends UtilMB implements Serializable {
 				return result;
 			}
 
-			@Override
-			public int count(Map<String, FilterMeta> filterBy) {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
 		};
 		userDataList.setRowCount(configuracionService.count(ConfiguracionSpecs.getConfiguracionByLLave(getLlaveBsq())
 				.and(ConfiguracionSpecs.getConfiguracionByValor(getValorBsq()))

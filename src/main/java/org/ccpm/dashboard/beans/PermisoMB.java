@@ -204,12 +204,6 @@ public class PermisoMB extends UtilMB implements Serializable {
 				return result;
 			}
 
-			@Override
-			public int count(Map<String, FilterMeta> filterBy) {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
 		};
 		userDataList.setRowCount(permisoService
 				.count(PermisoSpecs.getPermisoByNombre(getNombreBuscar()).and(PermisoSpecs.getByEstado(true)))

@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form id="formNuevoMunicipio">
+
+			<div class="card">
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<p:panelGrid columns="1" styleClass="ui-panelgrid-blank"
+							layout="grid">
+
+							<h1>#{msg.newMunicipio}</h1>
+							<p:outputLabel value="#{msg.nombre}:" for="nombre" />
+							<p:inputText id="nombre" value="#{municipioMB.nombre}"
+								label="#{msg.nombre}" required="true">
+								<p:ajax update="@this nombreError" />
+							</p:inputText>
+							<p:message id="nombreError" for="nombre" />
+							<p:outputLabel value="#{msg.codigoPostal}:" for="codigoPostal" />
+							<p:inputText id="codigoPostal"
+								value="#{municipioMB.codigoPostal}" required="true"
+								label="#{msg.codigoPostal}">
+								<p:ajax update="@this codigoPostalError" />
+							</p:inputText>
+							<p:message id="codigoPostalError" for="codigoPostal" />
+							<p:outputLabel value="#{msg.departamento}:" for="departamento" />
+							<p:selectOneMenu id="departamento"
+								value="#{municipioMB.idDepto}"
+								label="#{msg.departamento}" required="true" filter="true">
+								<f:selectItem noSelectionOption="true" itemValue="0"
+									itemLabel="#{msg.ninguno}" />
+								<f:selectItems value="#{municipioMB.selectItems}" />
+								<p:ajax update="@this departamentoMsg" />
+							</p:selectOneMenu>
+							<p:message id="departamentoMsg" for="departamento" />
+						</p:panelGrid>
+					</div>
+				</div>
+				<div class="p-formgroup-inline">
+					<div class="p-field">
+						<p:commandButton id="save" value="#{msg.save}"
+							icon="fa fa-floppy-o" action="#{municipioMB.crear()}"
+							ajax="true" update="@form" />
+					</div>
+					<div class="p-field">
+						<p:commandButton id="saveAndAdd" icon="fa fa-floppy-o"
+							value="#{msg.saveCreate}"
+							action="#{municipioMB.crearOtro()}" ajax="true"
+							update="@form" />
+					</div>
+					<div class="p-field">
+						<p:commandButton id="cancel" icon="fa fa-ban"
+							value="#{msg.cancel}" action="municipioConf"
+							actionListener="#{municipioMB.limpiar()}"
+							immediate="true" ajax="true" update="@form" />
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
