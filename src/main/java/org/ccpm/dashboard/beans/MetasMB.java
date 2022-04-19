@@ -66,16 +66,16 @@ public class MetasMB extends UtilMB implements Serializable {
 		try {
 			if (usuario.getRol() != null) {
 				for (PermisoDto permiso : usuario.getRol().getPermisos()) {
-					if (permiso.getNombre().equalsIgnoreCase("nuevoMetas")) {
+					if (permiso.getNombre().equalsIgnoreCase("nuevaMeta")) {
 						this.setAlta(true);
 					}
-					if (permiso.getNombre().equalsIgnoreCase("editarMetas")) {
+					if (permiso.getNombre().equalsIgnoreCase("editarMeta")) {
 						this.setModificacion(true);
 					}
-					if (permiso.getNombre().equalsIgnoreCase("borrarMetas")) {
+					if (permiso.getNombre().equalsIgnoreCase("borrarMeta")) {
 						this.setBaja(true);
 					}
-					if (permiso.getNombre().equalsIgnoreCase("detalleMetas")) {
+					if (permiso.getNombre().equalsIgnoreCase("detalleMeta")) {
 						this.setDetalle(true);
 					}
 				}
@@ -96,11 +96,15 @@ public class MetasMB extends UtilMB implements Serializable {
 	@Override
 	public String crear() {
 		try {
-			this.metasService.create(new MetasDto(null,this.getNombre().toUpperCase(), nro, descripcion, true));
+			MetasDto metasDto = new MetasDto();
+			metasDto.setNombre(nombre);
+			metasDto.setDescripcion(descripcion);
+			metasDto.setNro(nro);
+			this.metasService.create(metasDto);
 			this.setTitle("Información");
 			this.setImages("fa fa-check");
 			this.setResultado("resultadoMetas");
-			this.setMsgSuccessError("Metas creado correctamente");
+			this.setMsgSuccessError("Meta creada correctamente");
 			this.limpiar();
 		} catch (Exception ex) {
 			this.setTitle("Error");
