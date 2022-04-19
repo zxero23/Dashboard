@@ -1,0 +1,126 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	
+	<ui:define name="title">#{msg.confConfiguracion}</ui:define>
+
+	<ui:define name="content">
+		<div class="card">
+			<h1 class="lightBlack">#{msg.confConfiguracion}</h1>
+
+			<h:form id="formConfiguracion" title=" ">
+				<div class="p-formgroup-inline">
+					<div class="p-field">
+						<p:commandButton action="configuracionConf" icon="fa fa-refresh"
+							actionListener="#{configuracionMB.actualizar}"
+							value="#{msg.actualizar}" ajax="true" update="@form" />
+					</div>
+					<div class="p-field">
+						<p:commandButton action="nuevaConfiguracion" icon="fa fa-plus"
+							value="#{msg.newConfiguracion}"
+							rendered="#{configuracionMB.alta}" ajax="true"
+							update="@form" />
+					</div>
+				</div>
+				<p:panel id="panelBusquedaConfiguracion" header="#{msg.busqueda}"
+					toggleable="true" toggleSpeed="200" collapsed="true"
+					class="ui-fluid">
+					<p:defaultCommand target="buscar" />
+					<div class="p-field">
+						<p:outputLabel value="#{msg.llave}:" for="llave"
+							styleClass="p-col-fixed" />
+						<p:inputText id="llave"
+							value="#{configuracionMB.llaveBsq}" />
+					</div>
+					<div class="p-field">
+						<p:outputLabel value="#{msg.valor}:" for="valor"
+							styleClass="p-col-fixed" />
+						<p:inputText id="valor"
+							value="#{configuracionMB.valorBsq}" />
+					</div>
+					<div class="p-formgroup-inline">
+						<div class="p-field">
+							<p:commandButton id="buscar" value="#{msg.find}" icon="fa fa-search"
+								actionListener="#{configuracionMB.aplicarFiltro}"
+								ajax="true" update="@form" />
+						</div>
+						<div class="p-field">
+							<p:commandButton value="#{msg.actualizar}" icon="fa fa-refresh"
+								actionListener="#{configuracionMB.actualizar}"
+								ajax="true" update="@form" />
+						</div>
+					</div>
+				</p:panel>
+
+				<p:dataTable id="configuracionDataTable"
+					value="#{configuracionMB.listElements}" var="item"
+					first="#{configuracionMB.page}" paginator="true"
+					paginatorPosition="bottom" rows="10" lazy="true" reflow="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="#{msg.currentPageReportTemplate}">
+
+					<p:column id="id" headerText="#{msg.id}">
+						<h:outputText id="cellId" value="#{item.id}" />
+					</p:column>
+
+					<p:column id="llave" headerText="#{msg.llave}">
+						<h:outputText id="cellLlave" value="#{item.llave}" />
+					</p:column>
+
+					<p:column id="valor" headerText="#{msg.valor}">
+						<h:outputText id="cellValor" value="#{item.valor}" />
+					</p:column>
+
+					<p:column id="acciones" headerText="ACCIONES">
+						<div class="p-formgroup-inline">
+							<div class="p-field">
+								<p:commandButton id="detalle" p:title="Detalle"
+									onclick="detalleConfiguracion([{name:'id', value:'#{item.id}'}]);"
+									icon="fa fa-search-plus"
+									rendered="#{configuracionMB.detalle}">
+								</p:commandButton>
+							</div>
+							<div class="p-field">
+								<p:commandButton id="editar" p:title="Editar" icon="fa fa-edit"
+									onclick="editarConfiguracion([{name:'id', value:'#{item.id}'}]);"
+									rendered="#{configuracionMB.modificacion}" />
+							</div>
+							<div class="p-field">
+								<p:commandButton id="eliminar" p:title="Eliminar"
+									onclick="eliminarConfiguracion([{name:'id', value:'#{item.id}'}]);"
+									rendered="#{configuracionMB.baja}" icon="fa fa-trash">
+									<p:confirm header="#{msg.confirm}" message="#{msg.msgDelete}"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade" closable="false">
+									<p:commandButton id="_yes" value="#{msg.acep}" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton id="_no" value="#{msg.cancel}" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+										ajax="true" update="@form" />
+								</p:confirmDialog>
+							</div>
+						</div>
+					</p:column>
+				</p:dataTable>
+				<p:remoteCommand name="detalleConfiguracion"
+					actionListener="#{configuracionMB.verDetalle()}"
+					action="detalleConfiguracion" process="@this" update="@form" />
+				<p:remoteCommand name="editarConfiguracion"
+					actionListener="#{configuracionMB.prepararParaEditar()}"
+					action="editarConfiguracion" process="@this" update="@form" />
+				<p:remoteCommand name="eliminarConfiguracion"
+					actionListener="#{configuracionMB.guardarBorrado()}"
+					action="configuracionConf" process="@this" update="@form" />
+
+			</h:form>
+		</div>
+
+
+	</ui:define>
+
+</ui:composition>

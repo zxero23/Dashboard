@@ -573,7 +573,6 @@ public class UsuarioMB extends UtilMB implements Serializable {
 	
 	public void validarClaveAnterior(FacesContext context, UIComponent validate, Object value) {
 		String claveNuevaR = (String) value;
-
 		if (this.getClaveAnteriorRegistrada()!=null && claveNuevaR!=null && !claveNuevaR.equals(this.getClaveAnteriorRegistrada()) ) {
 			((UIInput) validate).setValid(false);
 			FacesMessage msg = new FacesMessage("Las clave ingresada no es válida.");
@@ -583,7 +582,6 @@ public class UsuarioMB extends UtilMB implements Serializable {
 	
 	public void validarClaveNuevaRepetir(FacesContext context, UIComponent validate, Object value) {
 		String claveNuevaR = (String) value;
-
 		if (this.getClaveNueva()!=null && claveNuevaR!=null && !claveNuevaR.equals(this.getClaveNueva()) ) {
 			((UIInput) validate).setValid(false);
 			FacesMessage msg = new FacesMessage("Las claves no coinciden.");

@@ -1,0 +1,130 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">#{msg.confMenu}</ui:define>
+
+	<ui:define name="content">
+		<div class="p-grid">
+			<div class="p-col-12">
+				<div class="card">
+					<h1 class="lightBlack">#{msg.confMenu}</h1>
+
+					<h:form id="formMenu" title=" ">
+						<div class="p-formgroup-inline">
+							<div class="p-field">
+								<p:commandButton action="menuConf" icon="fa fa-refresh"
+									actionListener="#{menuMB.actualizar}"
+									value="#{msg.actualizar}" ajax="true" update="@form" />
+							</div>
+							<div class="p-field">
+								<p:commandButton action="nuevoMenu" icon="fa fa-plus"
+									value="#{msg.newMenu}" rendered="#{menuMB.alta}"
+									ajax="true" update="@form" />
+							</div>
+						</div>
+						<p:defaultCommand target="buscar" />
+
+						<p:panel id="panelBusquedaMenu" header="#{msg.busqueda}"
+							toggleable="true" toggleSpeed="200" collapsed="true"
+							class="ui-fluid">
+							<div class="p-field">
+								<p:outputLabel value="#{msg.nombre}:" for="menu"
+									styleClass="p-col-fixed" />
+								<p:inputText id="menu" value="#{menuMB.nombreBuscar}" />
+							</div>
+							<div class="p-formgroup-inline">
+								<div class="p-field">
+									<p:commandButton id="buscar" value="#{msg.find}"
+										icon="fa fa-search"
+										actionListener="#{menuMB.aplicarFiltro}" ajax="true"
+										update="@form" />
+								</div>
+								<div class="p-field">
+									<p:commandButton value="#{msg.actualizar}" icon="fa fa-refresh"
+										actionListener="#{menuMB.actualizar}" ajax="true"
+										update="@form" />
+								</div>
+							</div>
+						</p:panel>
+
+						<p:dataTable id="menuDataTable"
+							value="#{menuMB.listElements}" lazy="true" reflow="true"
+							var="item" first="#{menuMB.page}" paginator="true"
+							paginatorPosition="bottom" rows="10"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							currentPageReportTemplate="#{msg.currentPageReportTemplate}">
+
+							<p:column id="id" headerText="#{msg.id}">
+								<h:outputText id="cellId" value="#{item.id}" />
+							</p:column>
+
+							<p:column id="nombre" styleClass="justify-left"
+								headerText="#{msg.nombre}">
+								<h:outputText id="cellNombre" value="#{item.nombre}" />
+							</p:column>
+
+							<p:column id="link" styleClass="justify-left"
+								headerText="#{msg.link}">
+								<h:outputText id="cellLink" value="#{item.link}" />
+							</p:column>
+
+							<p:column id="icono" headerText="#{msg.icono}">
+								<span class="#{item.icono}"></span>
+							</p:column>
+
+							<p:column id="permisos" headerText="Permisos">
+								<div class="p-formgroup-inline">
+									<div class="p-field">
+										<p:commandButton id="detalle" p:title="Detalle"
+											onclick="detalleMenu([{name:'id', value:'#{item.id}'}]);"
+											icon="fa fa-search-plus"
+											rendered="#{menuMB.detalle}">
+										</p:commandButton>
+									</div>
+									<div class="p-field">
+										<p:commandButton id="editar" p:title="Editar"
+											icon="fa fa-edit"
+											onclick="editarMenu([{name:'id', value:'#{item.id}'}]);"
+											rendered="#{menuMB.modificacion}" />
+									</div>
+									<div class="p-field">
+										<p:commandButton id="eliminar" p:title="Eliminar"
+											onclick="eliminarMenu([{name:'id', value:'#{item.id}'}]);"
+											rendered="#{menuMB.baja}" icon="fa fa-trash">
+											<p:confirm header="#{msg.confirm}" message="#{msg.msgDelete}"
+												icon="ui-icon-alert" />
+										</p:commandButton>
+										<p:confirmDialog global="true" showEffect="fade"
+											hideEffect="fade" closable="false">
+											<p:commandButton id="_yes" value="#{msg.acep}" type="button"
+												styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+											<p:commandButton id="_no" value="#{msg.cancel}" type="button"
+												styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+												ajax="true" update="@form" />
+										</p:confirmDialog>
+									</div>
+								</div>
+							</p:column>
+
+						</p:dataTable>
+						<p:remoteCommand name="detalleMenu"
+							actionListener="#{menuMB.verDetalle()}"
+							action="detalleMenu" process="@this" update="@form" />
+						<p:remoteCommand name="editarMenu"
+							actionListener="#{menuMB.prepararParaEditar()}"
+							action="editarMenu" process="@this" update="@form" />
+						<p:remoteCommand name="eliminarMenu"
+							actionListener="#{menuMB.guardarBorrado()}"
+							action="menuConf" process="@this" update="@form" />
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+
+	</ui:define>
+
+</ui:composition>

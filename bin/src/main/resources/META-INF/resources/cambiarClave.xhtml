@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+
+			<div class="card">
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<h1>#{msg.confCambiarClave}</h1>
+						<p>#{msg.cambiarClaveMensaje}</p>
+						 <p:growl id="growl" showDetail="true"  />
+						<div class="ui-fluid p-formgrid p-grid">
+							<div class="p-field p-col-12 p-md-12">
+								<p:outputLabel
+									value="#{msg.claveAnterior}:" for="claveAnterior" />
+								<p:inputText id="claveAnterior" type="password" validator="#{usuarioMB.validarClaveAnterior}"
+									value="#{usuarioMB.claveAnterior}"
+									label="#{msg.claveAnterior}" required="true">
+									<p:ajax update="@this claveAnteriorError"  />
+								</p:inputText>
+								<p:message id="claveAnteriorError" for="claveAnterior" />
+							</div>
+                            <div class="p-field p-col-12 p-md-12">
+								<p:outputLabel
+									value="#{msg.claveNueva}:" for="claveNueva" />
+								<p:inputText id="claveNueva" type="password"
+									value="#{usuarioMB.claveNueva}"
+									label="#{msg.claveNueva}" required="true">
+									<p:ajax update="@this claveNuevaError"  />
+								</p:inputText>
+								<p:message id="claveNuevaError" for="claveNueva" />
+							</div>   
+							<div class="p-field p-col-12 p-md-12">
+								<p:outputLabel
+									value="#{msg.claveNuevaRepetir}:" />
+								<p:inputText id="claveNuevaRepetir" type="password" validator="#{usuarioMB.validarClaveNuevaRepetir}"
+									value="#{usuarioMB.claveNuevaRepetir}"
+									label="#{msg.claveNuevaRepetir}" required="true">
+									<p:ajax update="@this claveNuevaRepetirError"  />
+								</p:inputText>
+								<p:message id="claveNuevaRepetirError" for="claveNuevaRepetir" />
+							</div>  
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="p-formgroup-inline">
+				<div class="p-field">
+					<p:commandButton id="save" value="#{msg.save}"
+						icon="fa fa-floppy-o" action="#{usuarioMB.guardarCambioClave()}"
+						ajax="true" update="@form" />
+				</div>
+				<div class="p-field">
+					<p:commandButton id="cancel" icon="fa fa-ban"
+						value="#{msg.cancel}" action="administracion"
+						actionListener="#{usuarioMB.limpiar()}" immediate="true"
+						ajax="true" update="@form" />
+				</div>
+			</div>
+		</h:form>
+		<h:inputHidden value="#{usuarioMB.id}" />
+	</ui:define>
+
+</ui:composition>

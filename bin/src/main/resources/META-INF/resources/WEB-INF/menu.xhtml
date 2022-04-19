@@ -1,0 +1,28 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pv="http://primefaces.org/verona"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <div class="layout-menu-wrapper">
+        <div class="layout-menu-container">
+            <h:form id="menuform">
+                <pv:menu widgetVar="VeronaMenuWidget">
+                    <p:menuitem id="im_dashboard" value="INICIO" icon="fa fa-home"  action="administracion" ajax="true"  immediate="true" />
+                    <c:forEach items="#{webMB.menu}" var="item">
+                        <p:submenu label="#{item.nombre}" icon="#{item.icono}" rendered="#{not empty item.menus}">
+                            <c:forEach items="#{item.menus}" var="subItem">
+                                <p:menuitem value="#{subItem.nombre}" icon="#{subItem.icono}" action="#{subItem.getLink()}"  ajax="true" immediate="true" rendered="#{empty subMenu.menus}"/>
+                            </c:forEach>                 
+                        </p:submenu> 
+                        <p:menuitem   value="#{item.nombre}" icon="#{item.icono}" action="#{item.getLink()}"  ajax="true" immediate="true" rendered="#{empty item.menus}" />
+                    </c:forEach>  
+                </pv:menu>
+            </h:form>
+        </div>
+    </div>
+
+</ui:composition>
