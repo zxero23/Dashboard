@@ -8,7 +8,7 @@
 		<div class="card">
 			<h1 class="lightBlack">#{msg.confMeta}</h1>
 
-			<h:form id="formMunicipio" title=" ">
+			<h:form id="formMeta" title=" ">
 				<div class="p-formgroup-inline">
 					<div class="p-field">
 						<p:commandButton action="metaConf" icon="fa fa-refresh"
@@ -16,8 +16,8 @@
 							value="#{msg.actualizar}" ajax="true" update="@form" />
 					</div>
 					<div class="p-field">
-						<p:commandButton action="nuevoMunicipio" icon="fa fa-plus"
-							value="#{msg.newMunicipio}" rendered="#{metasMB.alta}"
+						<p:commandButton action="nuevaMeta" icon="fa fa-plus"
+							value="#{msg.newMeta}" rendered="#{metasMB.alta}"
 							ajax="true" update="@form" />
 					</div>
 				</div>
@@ -60,11 +60,13 @@
 					currentPageReportTemplate="#{msg.currentPageReportTemplate}">
 
 
-					<p:column id="nro" headerText="#{msg.nro}">
-						<h:outputText id="cellNro" value="#{item.nro}" />
+					<p:column id="nro" headerText="#{msg.nro}" styleClass="justify-left">
+						<center>
+							<h:outputText id="cellNro" value="#{item.nro}" />
+						</center>
 					</p:column>
 					
-					<p:column id="nombre" headerText="#{msg.nombre}">
+					<p:column id="nombre" headerText="#{msg.nombre}" styleClass="justify-left">
 						<h:outputText id="cellNombre" value="#{item.nombre}" />
 					</p:column>
 
@@ -75,21 +77,22 @@
 					
 
 					<p:column id="permisos" headerText="Permisos">
+						<center>
 						<div class="p-formgroup-inline">
 							<div class="p-field">
 								<p:commandButton id="detalle" p:title="Detalle"
-									onclick="detalleMunicipio([{name:'id', value:'#{item.id}'}]);"
+									onclick="detalleMeta([{name:'id', value:'#{item.id}'}]);"
 									icon="fa fa-search-plus" rendered="#{metasMB.detalle}">
 								</p:commandButton>
 							</div>
 							<div class="p-field">
 								<p:commandButton id="editar" p:title="Editar" icon="fa fa-edit"
-									onclick="editarMunicipio([{name:'id', value:'#{item.id}'}]);"
+									onclick="editarMeta([{name:'id', value:'#{item.id}'}]);"
 									rendered="#{metasMB.modificacion}" />
 							</div>
 							<div class="p-field">
 								<p:commandButton id="eliminar" p:title="Eliminar"
-									onclick="eliminarMunicipio([{name:'id', value:'#{item.id}'}]);"
+									onclick="eliminarMeta([{name:'id', value:'#{item.id}'}]);"
 									rendered="#{metasMB.baja}" icon="fa fa-trash">
 									<p:confirm header="#{msg.confirm}" message="#{msg.msgDelete}"
 										icon="ui-icon-alert" />
@@ -104,14 +107,18 @@
 								styleClass="ui-confirmdialog-no" icon="ui-icon-close"
 								ajax="true" update="@form" />
 						</p:confirmDialog>
+						</center>
 					</p:column>
 				</p:dataTable>
+				
+				
+				
 				<p:remoteCommand name="detalleMeta"
 					actionListener="#{metasMB.verDetalle()}"
-					action="detalleMunicipio" process="@this" update="@form" />
+					action="detalleMeta" process="@this" update="@form" />
 				<p:remoteCommand name="editarMeta"
 					actionListener="#{metasMB.prepararParaEditar()}"
-					action="editarMunicipio" process="@this" update="@form" />
+					action="editarMeta" process="@this" update="@form" />
 				<p:remoteCommand name="eliminarMeta"
 					actionListener="#{metasMB.guardarBorrado()}"
 					action="metaConf" process="@this" update="@form" />
