@@ -65,12 +65,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 		ModelMapper modelMapper = new ModelMapper();
 		return modelMapper.map(UsuarioDto, Usuario.class);
 	}
-	/*
-	private PersonaDto convertPersonaToDto(Persona persona) {
-		ModelMapper modelMapper = new ModelMapper();
-		return modelMapper.map(persona, PersonaDto.class);
-	}
-    */
+	
+    
 	private Persona convertPersonaDtoToEntity(PersonaDto personaDto) {
 		ModelMapper modelMapper = new ModelMapper();
 		return modelMapper.map(personaDto, Persona.class);

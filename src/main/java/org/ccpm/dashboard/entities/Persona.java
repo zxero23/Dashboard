@@ -5,8 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,8 +12,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.ccpm.dashboard.enums.TipoPersona;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,10 +48,7 @@ public class Persona implements Serializable {
 	@OneToOne
 	private Municipio municipio;
 	@Column(length = 500)
-	private String domicilio;
-	@Column(name="tipo_persona", nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    private TipoPersona tipoPersona;
+	private String domicilio;	
 	@Column(length = 2000)
 	private String correo;
 	@Column(name="forma_juridica")
