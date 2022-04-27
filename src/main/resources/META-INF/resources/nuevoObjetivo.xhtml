@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form id="formNuevoMunicipio">
+
+			<div class="card">
+				<div class="ui-g ui-fluid">
+					<div class="ui-g-12">
+						<p:panelGrid columns="1" styleClass="ui-panelgrid-blank"
+							layout="grid">
+
+							<h1>#{msg.newObjetivo}</h1>
+							
+							<p:outputLabel value="#{msg.nro}:" for="nro" />
+							<p:inputText id="nro" value="#{objetivosMB.nro}"
+								label="#{msg.nro}" required="true">
+								<p:ajax update="@this nroError" />
+							</p:inputText>
+							<p:message id="nroError" for="nro" />
+							
+							<p:outputLabel value="#{msg.nombre}:" for="nombre" />
+							<p:inputText id="nombre" value="#{objetivosMB.nombre}"
+								label="#{msg.nombre}" required="true">
+								<p:ajax update="@this nombreError" />
+							</p:inputText>
+							<p:message id="nombreError" for="nombre" />
+							
+							<p:outputLabel value="#{msg.descripcion}:" for="descripcion" />
+							<p:inputText id="descripcion"
+								value="#{objetivosMB.descripcion}" required="true"
+								label="#{msg.descripcion}">
+								<p:ajax update="@this descripcionError" />
+							</p:inputText>
+							<p:message id="descripcionError" for="descripcion" />
+							
+							
+						</p:panelGrid>
+					</div>
+				</div>
+				<div class="p-formgroup-inline">
+					<div class="p-field">
+						<p:commandButton id="save" value="#{msg.save}"
+							icon="fa fa-floppy-o" action="#{objetivosMB.crear()}"
+							ajax="true" update="@form" />
+					</div>
+					<div class="p-field">
+						<p:commandButton id="saveAndAdd" icon="fa fa-floppy-o"
+							value="#{msg.saveCreate}"
+							action="#{objetivosMB.crearOtro()}" ajax="true"
+							update="@form" />
+					</div>
+					<div class="p-field">
+						<p:commandButton id="cancel" icon="fa fa-ban"
+							value="#{msg.cancel}" action="objetivosConf"
+							actionListener="#{objetivosMB.limpiar()}"
+							immediate="true" ajax="true" update="@form" />
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

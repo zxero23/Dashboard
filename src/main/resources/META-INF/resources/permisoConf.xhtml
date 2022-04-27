@@ -1,0 +1,118 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	
+	<ui:define name="title">#{msg.confPermiso}</ui:define>
+
+	<ui:define name="content">
+		<div class="card">
+			<h1 class="lightBlack">#{msg.confPermiso}</h1>
+
+			<h:form id="formPermiso" title=" ">
+				<div class="p-formgroup-inline">
+					<div class="p-field">
+						<p:commandButton action="permisoConf" icon="fa fa-refresh"
+							actionListener="#{permisoMB.actualizar}"
+							value="#{msg.actualizar}" ajax="true" update="@form" />
+					</div>
+					<div class="p-field">
+						<p:commandButton action="nuevoPermiso" icon="fa fa-plus"
+							value="#{msg.newPermiso}" rendered="#{permisoMB.alta}"
+							ajax="true" update="@form" />
+					</div>
+				</div>
+				<p:panel id="panelBusquedaPermiso" header="#{msg.busqueda}"
+					toggleable="true" toggleSpeed="200" collapsed="true"
+					class="ui-fluid">
+					<p:defaultCommand target="buscar" />
+					<div class="p-field">
+						<p:outputLabel value="#{msg.nombre}:" for="permiso"
+							styleClass="p-col-fixed" />
+						<p:inputText id="permiso"
+							value="#{permisoMB.nombreBuscar}" />
+					</div>
+					<div class="p-formgroup-inline">
+						<div class="p-field">
+							<p:commandButton id="buscar" value="#{msg.find}" icon="fa fa-search"
+								actionListener="#{permisoMB.aplicarFiltro}" ajax="true"
+								update="@form" />
+						</div>
+						<div class="p-field">
+							<p:commandButton value="#{msg.actualizar}" icon="fa fa-refresh"
+								actionListener="#{permisoMB.actualizar}" ajax="true"
+								update="@form" />
+						</div>
+					</div>
+				</p:panel>
+
+				<p:dataTable id="permisoDataTable"
+					value="#{permisoMB.listElements}" lazy="true"
+					reflow="true" var="item" first="#{permisoMB.page}"
+					paginator="true" paginatorPosition="bottom" rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="#{msg.currentPageReportTemplate}">
+
+					<p:column id="id" headerText="#{msg.id}">
+						<center>
+							<h:outputText id="cellId" value="#{item.id}" />
+						</center>
+					</p:column>
+
+					<p:column id="nombre" styleClass="justify-left"
+						headerText="#{msg.nombre}">
+						<h:outputText id="cellNombre" value="#{item.nombre}" />
+					</p:column>
+
+					<p:column id="permiso" headerText="Permisos">
+						<div class="p-formgroup-inline">
+							<div class="p-field">
+								<p:commandButton id="detalle" p:title="Detalle"
+									onclick="detallePermiso([{name:'id', value:'#{item.id}'}]);"
+									icon="fa fa-search-plus"
+									rendered="#{permisoMB.detalle}">
+								</p:commandButton>
+							</div>
+							<div class="p-field">
+								<p:commandButton id="editar" p:title="Editar" icon="fa fa-edit"
+									onclick="editarPermiso([{name:'id', value:'#{item.id}'}]);"
+									rendered="#{permisoMB.modificacion}" />
+							</div>
+							<div class="p-field">
+								<p:commandButton id="eliminar" p:title="Eliminar"
+									onclick="eliminarPermiso([{name:'id', value:'#{item.id}'}]);"
+									rendered="#{permisoMB.baja}" icon="fa fa-trash">
+									<p:confirm header="#{msg.confirm}" message="#{msg.msgDelete}"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade" closable="false">
+									<p:commandButton id="_yes" value="#{msg.acep}" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton id="_no" value="#{msg.cancel}" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+										ajax="true" update="@form" />
+								</p:confirmDialog>
+							</div>
+						</div>
+					</p:column>
+
+				</p:dataTable>
+				<p:remoteCommand name="detallePermiso"
+					actionListener="#{permisoMB.verDetalle()}"
+					action="detallePermiso" process="@this" update="@form" />
+				<p:remoteCommand name="editarPermiso"
+					actionListener="#{permisoMB.prepararParaEditar()}"
+					action="editarPermiso" process="@this" update="@form" />
+				<p:remoteCommand name="eliminarPermiso"
+					actionListener="#{permisoMB.guardarBorrado()}"
+					action="permisoConf" process="@this" update="@form" />
+			</h:form>
+		</div>
+
+
+	</ui:define>
+
+</ui:composition>

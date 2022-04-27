@@ -1,0 +1,132 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+    <ui:define name="title">#{msg.confMesa}</ui:define>
+	<ui:define name="content">
+		<div class="card">
+			<h1 class="lightBlack">#{msg.confMesa}</h1>
+
+			<h:form id="formMesa" title=" ">
+				<div class="p-formgroup-inline">
+					<div class="p-field">
+						<p:commandButton action="mesaConf" icon="fa fa-refresh"
+							actionListener="#{mesaMB.actualizar}"
+							value="#{msg.actualizar}" ajax="true" update="@form" />
+					</div>
+					<div class="p-field">
+						<p:commandButton action="nuevaMesa" icon="fa fa-plus"
+							value="#{msg.newMesa}" rendered="#{mesaMB.alta}"
+							ajax="true" update="@form" />
+					</div>
+				</div>
+				<p:panel id="panelBusquedaMesa" header="#{msg.busqueda}"
+					toggleable="true" toggleSpeed="200" collapsed="true"
+					class="ui-fluid">
+					<p:hotkey bind="enter"
+						actionListener="#{mesaMB.aplicarFiltro}" />
+					<div class="p-field">
+						<p:outputLabel value="#{msg.nombre}:" for="nombre"
+							styleClass="p-col-fixed" />
+						<p:inputText id="nombre" value="#{mesaMB.nombreBsq}" />
+					</div>
+					<div class="p-field">
+						<p:outputLabel value="#{msg.descripcion}:" for="descripcion"
+							styleClass="p-col-fixed" />
+						<p:inputText id="descripcion"
+							value="#{mesaMB.descripcionBsq}" />
+					</div>
+					
+					<div class="p-formgroup-inline">
+						<div class="p-field">
+							<p:commandButton value="#{msg.find}" icon="fa fa-search"
+								actionListener="#{mesaMB.aplicarFiltro}" ajax="true"
+								update="@form" />
+						</div>
+						<div class="p-field">
+							<p:commandButton value="#{msg.actualizar}" icon="fa fa-refresh"
+								actionListener="#{mesaMB.actualizar}" ajax="true"
+								update="@form" />
+						</div>
+					</div>
+				</p:panel>
+
+				<p:dataTable id="mesaDataTable"
+					value="#{mesaMB.listElements}" var="item" lazy="true"
+					reflow="true" paginator="true" paginatorPosition="bottom" rows="10"
+					class="panel-buttons" first="#{mesaMB.page}"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					currentPageReportTemplate="#{msg.currentPageReportTemplate}">
+
+
+					<p:column id="nro" headerText="#{msg.nro}" styleClass="justify-left">
+						<center>
+							<h:outputText id="cellNro" value="#{item.nro}" />
+						</center>
+					</p:column>
+					
+					<p:column id="nombre" headerText="#{msg.nombre}" styleClass="justify-left">
+						<h:outputText id="cellNombre" value="#{item.nombre}" />
+					</p:column>
+
+					<p:column id="descripcion" headerText="#{msg.descripcion}">
+						<h:outputText id="cellCodigoPostal" value="#{item.descripcion}" />
+					</p:column>
+
+					
+
+					<p:column id="permisos" headerText="Permisos">
+						<center>
+						<div class="p-formgroup-inline">
+							<div class="p-field">
+								<p:commandButton id="detalle" p:title="Detalle"
+									onclick="detalleMesa([{name:'id', value:'#{item.id}'}]);"
+									icon="fa fa-search-plus" rendered="#{mesaMB.detalle}">
+								</p:commandButton>
+							</div>
+							<div class="p-field">
+								<p:commandButton id="editar" p:title="Editar" icon="fa fa-edit"
+									onclick="editarMesa([{name:'id', value:'#{item.id}'}]);"
+									rendered="#{mesaMB.modificacion}" />
+							</div>
+							<div class="p-field">
+								<p:commandButton id="eliminar" p:title="Eliminar"
+									onclick="eliminarMesa([{name:'id', value:'#{item.id}'}]);"
+									rendered="#{mesaMB.baja}" icon="fa fa-trash">
+									<p:confirm header="#{msg.confirm}" message="#{msg.msgDelete}"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+							</div>
+						</div>
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+							closable="false">
+							<p:commandButton id="_yes" value="#{msg.acep}" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton id="_no" value="#{msg.cancel}" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+								ajax="true" update="@form" />
+						</p:confirmDialog>
+						</center>
+					</p:column>
+				</p:dataTable>
+				
+				
+				
+				<p:remoteCommand name="detalleMesa"
+					actionListener="#{mesaMB.verDetalle()}"
+					action="detalleMesa" process="@this" update="@form" />
+				<p:remoteCommand name="editarMesa"
+					actionListener="#{mesaMB.prepararParaEditar()}"
+					action="editarMesa" process="@this" update="@form" />
+				<p:remoteCommand name="eliminarMesa"
+					actionListener="#{mesaMB.guardarBorrado()}"
+					action="mesaConf" process="@this" update="@form" />
+
+			</h:form>
+		</div>
+
+
+	</ui:define>
+
+</ui:composition>
