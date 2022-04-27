@@ -1,0 +1,28 @@
+$fontFamily: "Lato","Helvetica Neue",sans-serif !default;
+$fontSize:13px !default;
+$textColor:#2d353c !default;
+$textSecondaryColor:lighten($textColor,25%) !default;
+$borderRadius:2px !default;
+$dividerColor:#dce2e7 !default;
+$transitionDuration:.3s !default;
+$tabletBreakpoint: 991px !default;
+$phoneBreakpoint: 576px !default;
+
+/* Predefined Colors */
+$blue:#3ebaf8 !default;
+$orange:#f7cb00 !default;
+$purple:#985edb !default;
+$pink:#f18983 !default;
+$green:#9fd037 !default;
+$black:#525262 !default;
+$amber:#f7cb00 !default;
+$secondary:#f4f4f4 !default;
+
+$bodyBgColor:#eaeff2 !default;
+$footerBgColor:#dee0e3 !default;
+$appNameTextColor:#ffffff !default;
+$searchInputBgColor:#f5f8f9 !default;
+$searchInputBorderColor:#f5f8f9 !default;
+$searchInputFocusBorderColor:#a8b4be !default;
+$menuItemActiveTextColor:#ffffff !default;
+$cardBgColor:#f7f9fa !default;
